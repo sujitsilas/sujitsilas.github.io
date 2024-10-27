@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <title>Sujit Silas Armstrong | UCLA</title>
+    <title>Sujit Silas | UCLA</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,7 +17,7 @@
       gtag('config', 'G-QWNV6EKCWH');
     </script>
 
-    <link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin=anonymous>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <style>
@@ -52,6 +52,11 @@
         margin-bottom: 20px;
         display: block;
       }
+
+      .image img {
+        width: 100%;
+        border-radius: 50%;
+      }
       
       .social-icons a {
         color: #24292e;
@@ -85,7 +90,7 @@
       }
       
       .links a {
-        text-decoration: none; /* Removed underline from publication links */
+        text-decoration: none;
         color: #24292e;
       }
       
@@ -135,7 +140,9 @@
   <body>
     <div class="wrapper">
       <header>
-        <a class="image avatar"><img src="" alt="avatar" /></a>
+        <div class="image avatar">
+          <img src="/images/me.png" alt="avatar" />
+        </div>
         <h1>Sujit Silas Armstrong</h1>
         <position style="font-size:1.10rem;">M.S. Student</position>
         <br>
@@ -189,7 +196,7 @@
               <div class="pub-row">
                 <div class="col-sm-9" style="position: relative;padding-right: 15px;padding-left: 20px;">
                   <div class="title"><a href="https://www.nature.com/articles/s41590-023-01589-9">Identification of human exTreg cells as CD16+CD56+ cytotoxic CD4+ T cells</a></div>
-                  <div class="author">Nature Immunology (2023)</div>
+                  <div class="author">Nature Reviews Immunology (2023)</div>
                   <div class="links">
                     <a href="https://www.nature.com/articles/s41590-023-01589-9" class="btn btn-sm z-depth-0" role="button" target="_blank">Paper</a>
                   </div>
@@ -198,10 +205,6 @@
             </li>
           </ol>
         </div>
-
-        <h2 id="current-projects">Current Projects</h2>
-        <p>Exploring methylation markers in cancer patients and investigating the link between environmental toxins and epigenetic modifications.</p>
-        <p>Working on single-cell sequencing of immune cell populations to uncover heterogeneity in tumor microenvironments.</p>
       </section>
     </div>
   </body>
