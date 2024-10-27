@@ -22,7 +22,7 @@
       }
       
       h1, h2 {
-        color: #00008B; /* Dark Blue for titles */
+        color: rgb(20, 50, 94);
       }
       
       header {
@@ -75,6 +75,11 @@
         margin-bottom: 5px;
       }
       
+      .links a {
+        text-decoration: none;
+        color: #24292e;
+      }
+      
       .btn {
         display: inline-block;
         padding: 5px 10px;
@@ -85,6 +90,17 @@
         text-decoration: none;
         font-size: 12px;
         margin-right: 5px;
+      }
+      
+      .icon-container {
+        display: flex;
+        margin-top: 10px;
+      }
+      
+      .icon-container a {
+        margin-right: 15px;
+        color: #24292e;
+        text-decoration: none;
       }
       
       @media screen and (max-width: 960px) {
@@ -111,19 +127,22 @@
       <header>
         <img class="avatar" src="/api/placeholder/150/150" alt="Sujit Silas Armstrong" />
         <h1>Sujit Silas Armstrong</h1>
-        <position style="font-size:1.10rem;">MS Student</position>
+        <position style="font-size:1.10rem;">M.S. Bioengineering</position>
         <br>
         University of California, Los Angeles
         <br>
         <email>sujitsilas@g.ucla.edu</email>
         <br>
         <br>
-        <div class="social-icons">
-          <a style="margin: 0 5px 0 0" href="https://www.linkedin.com/in/sujitsilasarmstrong/">
-            <i class="fab fa-linkedin"></i>
+        <div class="icon-container">
+          <a href="https://scholar.google.com/citations?user=example">
+            <i class="ai ai-google-scholar-square ai-2x"></i>
           </a>
-          <a style="margin: 0 0 0 0" href="https://x.com/sujitsilas">
-            <i class="fab fa-x-twitter"></i>
+          <a href="/path-to-cv.pdf">
+            <i class="fa-solid fa-file-pdf"></i>
+          </a>
+          <a href="https://github.com/sujitsilas">
+            <i class="fab fa-github"></i>
           </a>
         </div>
         <br>
@@ -131,7 +150,7 @@
       
       <section>
         <h2 id="about-me">About Me</h2>
-        <p>I'm a second-year MS student in Bioengineering at UCLA, with a focus on computational biology and bioinformatics. My research interests span single-cell genomics, deep learning applications in biology, and cancer genomics. I’m currently working with data related to differential methylation and methylation patterns in cancer at GRAIL. Before UCLA, I earned a BS in Biology from UC Riverside, where I worked on various bioinformatics algorithms and analysis tools for immunology. I’m passionate about using computational methods to unravel complex biological questions and aim to apply these skills to improve healthcare outcomes.</p>
+        <p>I'm a second-year MS student in Bioengineering at UCLA, with a focus biomedical data sciences. My research interests span single-cell genomics, deep learning applications in biology, and cancer genomics. I’m currently working with data related to differential methylation and methylation patterns in cancer at GRAIL. Before UCLA, I earned a BS in Biology from UC Riverside, where I worked on various bioinformatics algorithms and analysis tools for immunology. I’m passionate about using computational methods to unravel complex biological questions and aim to apply these skills to improve healthcare outcomes.</p>
 
         <h2 id="research-interests">Research Interests</h2>
         <ul>
@@ -176,16 +195,3 @@
               <div class="pub-row">
                 <div class="col-sm-9" style="position: relative;padding-right: 15px;padding-left: 20px;">
                   <div class="title"><a href="https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2024.1302031/full">Identification of apolipoprotein B–reactive CDR3 motifs allows tracking of atherosclerosis-related memory CD4+T cells in multiple donors</a></div>
-                  <div class="author">Frontiers in Immunology (2024)</div>
-                  <div class="links">
-                    <a href="https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2024.1302031/full" class="btn btn-sm z-depth-0" role="button" target="_blank">Paper</a>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </section>
-    </div>
-  </body>
-</html>
