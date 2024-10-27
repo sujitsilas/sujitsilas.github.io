@@ -7,7 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sujit Silas Armstrong's Personal Website">
     <meta name="keywords" content="sujit silas armstrong personal website">
-    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QWNV6EKCWH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QWNV6EKCWH');
+    </script>
+
     <link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin=anonymous>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
@@ -22,7 +31,7 @@
       }
       
       h1, h2 {
-        color: rgb(20, 50, 94);
+        color: rgb(20, 50, 94); /* Dark Blue for titles */
       }
       
       header {
@@ -76,7 +85,7 @@
       }
       
       .links a {
-        text-decoration: none;
+        text-decoration: none; /* Removed underline from publication links */
         color: #24292e;
       }
       
@@ -122,30 +131,26 @@
       }
     </style>
   </head>
+
   <body>
     <div class="wrapper">
       <header>
-        <img class="avatar" src="/api/placeholder/150/150" alt="Sujit Silas Armstrong" />
+        <a class="image avatar"><img src="images/me.png" alt="avatar" /></a>
         <h1>Sujit Silas Armstrong</h1>
-        <position style="font-size:1.10rem;">M.S. Bioengineering</position>
+        <position style="font-size:1.10rem;">M.S. Student</position>
         <br>
-        University of California, Los Angeles
+        <a href="" rel="noopener"><autocolor>UCLA | GRAIL Inc.</autocolor></a>
         <br>
-        <email>sujitsilas@g.ucla.edu</email>
-        <br>
-        <br>
-        <div class="icon-container">
-          <a href="https://scholar.google.com/citations?user=example">
-            <i class="ai ai-google-scholar-square ai-2x"></i>
-          </a>
-          <a href="/path-to-cv.pdf">
-            <i class="fa-solid fa-file-pdf"></i>
-          </a>
-          <a href="https://github.com/sujitsilas">
-            <i class="fab fa-github"></i>
-          </a>
+        <email>sujit (at) ucla.edu</email>
+        <br><br>
+
+        <div class="social-icons">
+          <a href="assets/files/resume_website.pdf" target="_blank"><i class="ai ai-cv" style="font-size:1.3rem;"></i></a>
+          <a href="https://scholar.google.com/citations?user=Kzco-lsAAAAJ&hl=en" target="_blank"><i class="ai ai-google-scholar"></i></a>
+          <a href="https://www.linkedin.com/in/sujitarmstrong/" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://github.com/sujitsilas" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="https://x.com/SujitArmstrong" target="_blank"><i class="fab fa-x-twitter"></i></a>
         </div>
-        <br>
       </header>
       
       <section>
