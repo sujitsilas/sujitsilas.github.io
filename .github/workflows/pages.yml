@@ -28,19 +28,16 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
-      # Explicitly set the directory for deployment
-      - name: Prepare artifact
+      # Properly prepare deployment folder by excluding _site itself
+      - name: Prepare site content
         run: |
-          mkdir -p ./_site
-          cp -r ./* ./_site/
-          rm -rf ./_site/.git
-          ls -la ./_site
+          mkdir -p _site
+          rsync -av --exclude='_site' ./ _site/
 
-      # Proper upload action specifically for GitHub Pages
-      - name: Upload Pages artifact
+      - name: Upload GitHub Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './_site'
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
