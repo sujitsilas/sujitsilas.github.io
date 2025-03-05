@@ -25,14 +25,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup GitHub Pages
+      - name: Setup Pages
         uses: actions/configure-pages@v3
 
-      # IMPORTANT: Use actions/upload-pages-artifact@v3, not actions/upload-artifact
-      - name: Upload GitHub Pages artifact
+      # Explicitly create '_site' directory
+      - name: Prepare site content
+        run: |
+          mkdir _site
+          cp -r ./* _site/
+          ls -la _site
+
+      # Upload from the correct '_site' directory explicitly
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'  # Adjust this path if your files to deploy are in a subdirectory
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
