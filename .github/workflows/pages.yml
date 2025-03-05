@@ -17,6 +17,9 @@ concurrency:
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,10 +28,12 @@ jobs:
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v3
 
-      - name: Upload artifact
+      # IMPORTANT: Use actions/upload-pages-artifact@v3, not actions/upload-artifact
+      - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '.'  # Adjust this path if your files to deploy are in a subdirectory
 
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v2
