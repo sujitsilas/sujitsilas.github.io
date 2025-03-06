@@ -28,11 +28,16 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
-      # Properly prepare deployment folder by excluding _site itself
       - name: Prepare site content
         run: |
           mkdir -p _site
           rsync -av --exclude='_site' ./ _site/
+          ls -la _site
+      
+      - name: Upload GitHub Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
 
       - name: Upload GitHub Pages Artifact
         uses: actions/upload-pages-artifact@v3
