@@ -33,11 +33,6 @@ jobs:
           mkdir -p _site
           rsync -av --exclude='_site' ./ _site/
           ls -la _site
-      
-      - name: Upload GitHub Pages Artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '_site'
 
       - name: Upload GitHub Pages Artifact
         uses: actions/upload-pages-artifact@v3
@@ -46,4 +41,4 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
