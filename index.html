@@ -1,6 +1,15 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" data-theme="light">
   <head>
+    <script>
+      // Set the theme before first paint so there is no flash of the wrong colors.
+      (function () {
+        var saved = null;
+        try { saved = localStorage.getItem('theme'); } catch (e) {}
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+      })();
+    </script>
     <title>Sujit Silas Armstrong Suthahar</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,7 +38,8 @@
 		    "https://www.sciencedaily.com/releases/2022/05/220520144701.htm",
 		    "https://www.theallardlabatucla.org/people",
 	            "https://www.instagram.com/sujitsilas_photography/",
-	            "https://www.youtube.com/@sujitsilas"
+	            "https://www.youtube.com/@sujitsilas",
+	            "https://substack.com/@sujitsilas"
 		  ],
 		  "jobTitle": "Graduate Student | Computational Biologist",
 		  "worksFor": {
@@ -67,22 +77,60 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <style>
+      :root {
+	    --bg: #ffffff;
+	    --text: #24292e;
+	    --heading: rgb(20, 50, 94);
+	    --muted: #586069;
+	    --link: #5296c7;
+	    --link-hover: #2a6595;
+	    --accent: #008CBA;
+	    --rule: #ccc;
+	    --btn-bg: #f6f8fa;
+	    --btn-border: #e1e4e8;
+	    --icon: #555;
+	    --switch-track: #e6e8eb;
+	    --switch-border: #d5d9de;
+	    --switch-knob: #ffffff;
+	    --switch-icon: #6a707a;
+      }
+
+      [data-theme="dark"] {
+	    --bg: #0f1115;
+	    --text: #c9d1d9;
+	    --heading: #a9c8ea;
+	    --muted: #8b949e;
+	    --link: #6fb1e0;
+	    --link-hover: #9ccdf2;
+	    --accent: #4fb3d4;
+	    --rule: #30363d;
+	    --btn-bg: #1a1e24;
+	    --btn-border: #30363d;
+	    --icon: #8b949e;
+	    --switch-track: #2f5c85;
+	    --switch-border: #3d6f9c;
+	    --switch-knob: #e8eef5;
+	    --switch-icon: #2f5c85;
+      }
+
       a {
 	    text-decoration: none;
-	    color: #5296c7; 
+	    color: var(--link);
       }
-	  
+
       a:hover {
-	    color: #2a6595;
+	    color: var(--link-hover);
       }
-	    
+
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        color: #24292e;
+        background-color: var(--bg);
+        color: var(--text);
         line-height: 1.6;
         padding: 45px;
         max-width: 960px;
         margin: 0 auto;
+        transition: background-color .2s ease, color .2s ease;
       }
 
       html {
@@ -90,9 +138,21 @@
       }
 	      
       h1, h2 {
-        color: rgb(20, 50, 94);
+        color: var(--heading);
       }
-      
+
+      /* Uniform size and rhythm for every section heading */
+      h2 {
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin: 42px 0 12px;
+      }
+
+      section > h2:first-child,
+      .panel > h2 {
+        margin-top: 0;
+      }
+
       header {
         width: 270px;
         float: left;
@@ -105,10 +165,63 @@
       }
       
       .social-icons a {
-        color: #24292e;
+        color: var(--text);
         text-decoration: none;
         margin-right: 10px;
       }
+
+      .social-icons a:hover {
+        color: var(--link);
+      }
+
+      /*
+        Theme switch pinned to the top-right corner. The horizontal offset keeps its
+        right edge flush with the right edge of the content column (body is max-width
+        960px + 45px padding, so the column edge sits 50vw - 480px from the viewport
+        edge), falling back to the 45px body padding on narrower screens.
+      */
+      .theme-switch {
+        position: fixed;
+        top: 45px;
+        right: max(45px, calc(50vw - 480px));
+        z-index: 100;
+        width: 46px;
+        height: 26px;
+        padding: 2px;
+        border: 1px solid var(--switch-border);
+        border-radius: 999px;
+        background: var(--switch-track);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        /* Page-colored halo so scrolling text never runs into the pill */
+        box-shadow: 0 0 0 7px var(--bg);
+        transition: background-color .25s ease, border-color .25s ease, box-shadow .25s ease;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .theme-switch:hover { border-color: var(--link); }
+
+      .theme-switch .knob {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--switch-knob);
+        color: var(--switch-icon);
+        font-size: 10px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .28);
+        transform: translateX(0);
+        transition: transform .25s cubic-bezier(.3, .7, .4, 1.1);
+      }
+
+      [data-theme="dark"] .theme-switch .knob { transform: translateX(20px); }
+
+      [data-theme="light"] .theme-switch .moon,
+      [data-theme="dark"] .theme-switch .sun { display: none; }
       
       .publications {
         margin-top: 20px;
@@ -131,39 +244,97 @@
       }
       
       .author {
-        color: #586069;
+        color: var(--muted);
         margin-bottom: 5px;
 	font-size: 0.85em;
       }
-      
+
       .links a {
         text-decoration: none;
-        color: #24292e;
+        color: var(--text);
       }
-      
+
       .btn {
         display: inline-block;
         padding: 5px 10px;
-        background-color: #f6f8fa;
-        border: 1px solid #e1e4e8;
+        background-color: var(--btn-bg);
+        border: 1px solid var(--btn-border);
         border-radius: 6px;
-        color: #24292e;
+        color: var(--text);
         text-decoration: none;
         font-size: 12px;
         margin-right: 5px;
       }
-      
+
+      .btn:hover {
+        color: var(--link);
+        border-color: var(--link);
+      }
+
       .icon-container {
         display: flex;
         margin-top: 10px;
       }
-      
+
       .icon-container a {
         margin-right: 15px;
-        color: #24292e;
+        color: var(--text);
         text-decoration: none;
       }
-      
+
+      /* Figure thumbnails are white-background panels; keep them legible on dark */
+      [data-theme="dark"] .pub-row img {
+        background: #fff;
+        border-radius: 4px;
+        padding: 3px;
+      }
+
+      /* Bordered panels (Other Interests) */
+      .panel {
+        border: 1px solid var(--rule);
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+
+      .panel i { color: var(--icon); }
+
+      .panel .accent-link { color: var(--accent); text-decoration: none; }
+      .panel .accent-link:hover { text-decoration: underline; }
+
+      /* Collapsible news */
+      #news-toggle {
+        display: inline-block;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 6px 0 0;
+        font: inherit;
+        font-size: 0.9em;
+        color: var(--link);
+        cursor: pointer;
+      }
+
+      #news-toggle:hover { color: var(--link-hover); text-decoration: underline; }
+
+      #news-list li.is-hidden { display: none; }
+
+      .news-heading {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .news-heading .chevron {
+        font-size: 0.6em;
+        color: var(--muted);
+        transition: transform .2s ease;
+      }
+
+      .news-heading.is-collapsed .chevron { transform: rotate(-90deg); }
+
       @media screen and (max-width: 960px) {
         header {
           position: static;
@@ -185,6 +356,13 @@
   </head>
 
   <body>
+    <button type="button" class="theme-switch" id="theme-toggle" role="switch" aria-checked="false" aria-label="Dark mode">
+      <span class="knob">
+        <i class="fa-solid fa-sun sun"></i>
+        <i class="fa-solid fa-moon moon"></i>
+      </span>
+    </button>
+
     <div class="wrapper">
       <header>
         <h1>Sujit Silas</h1>
@@ -201,27 +379,36 @@
           <a href="https://www.linkedin.com/in/sujitsilasarmstrong/" target="_blank"><i class="fab fa-linkedin"></i></a>
           <a href="https://github.com/sujitsilas" target="_blank"><i class="fab fa-github"></i></a>
           <a href="https://x.com/sujit_silas" target="_blank"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://substack.com/@sujitsilas?r=62ysmn&amp;utm_campaign=profile&amp;utm_medium=profile-page" target="_blank" rel="noopener noreferrer" aria-label="Substack" title="Substack"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:1em;height:1em;vertical-align:-0.125em;fill:currentColor;"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg></a>
         </div>
+
       </header>
       
       <section>
         <h2 id="about-me">About Me</h2>
-         <p>Hello! I'm Sujit, a computational biologist with close to six years of experience in the field. My strong research background and analytical skills have enabled me to drive multiple projects at the intersection of biology and informatics.</p>
-	<p>I'm currently pursuing a PhD in Bioengineering at the Henry Samueli School of Engineering, UCLA, co-advised by 
-	<a href="https://www.uclahealth.org/departments/medicine/dermatology/research/philip-scumpia-lab">Dr. Philip Scumpia</a> and 
-	<a href="https://www.biomicrofluidics.com/">Dr. Dino Di Carlo</a>. Previously, I completed my MS in Bioengineering at UCLA under the guidance of 
-	<a href="https://www.theallardlabatucla.org/">Dr. Patrick Allard</a>, where I developed matrix factorization methods to explore transgenerational toxicity using embryonic stem cell lines. For my coursework, I specialized in biomedical data science—focusing on medical informatics, mathematical modeling, and deep learning—while taking classes from the Electrical Engineering and Mathematics departments to further broaden my skill set for tackling complex, data-driven challenges.</p>
-	<p>Before starting graduate school, I worked as a Bioinformatics Specialist at the <a href="https://www.lji.org/">La Jolla Institute for Immunology</a>, leading various bioinformatics initiatives under the mentorship of 
-	<a href="https://www.augusta.edu/centers/immcg/klaus-ley.php">Klaus Ley, MD</a>. I analyzed a range of next-generation sequencing datasets to identify genetic markers in inflammatory diseases, focusing on standardizing and optimizing pipelines. These efforts contributed to over ten high-impact publications.</p>
-	<p>I am dedicated to leveraging my expertise to advance the life sciences. I welcome collaborations and opportunities to explore this exciting field further. Let's connect and discover new possibilities together!</p>
+
+<p>Hello! I'm Sujit, a computational biologist with close to six years of experience working at the intersection of biology, immunology, and data science. My research focuses on using single-cell, spatial, and multimodal approaches to understand how cells transition between inflammatory, reparative, and dysfunctional states and how those cellular states ultimately shape tissue outcomes.</p>
+
+<p>I'm currently pursuing a PhD in Bioengineering at the Henry Samueli School of Engineering, UCLA, co-advised by 
+<a href="https://www.uclahealth.org/departments/medicine/dermatology/research/philip-scumpia-lab">Dr. Philip Scumpia</a> and 
+<a href="https://www.biomicrofluidics.com/">Dr. Dino Di Carlo</a>. I study the interactions between myeloid and epithelial compartments following injury. I am interested in how resident and recruited immune populations change state within their tissue environment, how inflammatory programs transition toward resolution and repair, and how cell–cell interactions determine whether tissue returns to homeostasis or progresses toward chronic inflammation and pathological remodeling.</p>
+
+<p>Although macrophages are a major focus of my work, I view them as part of a broader tissue network rather than as isolated cell types. Macrophage states exist along continua shaped by both ontogeny and the local tissue niche. My work therefore aims to resolve these states in the context of the surrounding cellular ecosystem including epithelial, stromal, and other immune populations by connecting changes in cellular state to functional tissue outcomes.</p>
+
+<p>Before UCLA, I worked as a Bioinformatics Specialist at the <a href="https://www.lji.org/">La Jolla Institute for Immunology</a> under the mentorship of <a href="https://www.augusta.edu/centers/immcg/klaus-ley.php">Klaus Ley, MD</a>, where I worked with single-cell transcriptomics, CITE-seq, and T-cell receptor sequencing data to investigate immune responses underlying inflammation and disease progression in atherosclerosis and cardiovascular disease.</p>
+
+<p>My earlier training at UCLA with <a href="https://www.theallardlabatucla.org/">Dr. Patrick Allard</a> further developed this perspective. During my MS in Bioengineering, I developed matrix factorization approaches to characterize transgenerational responses to toxicant exposure in embryonic stem cells. The challenge was to extract interpretable structure from three distinct types of high-dimensional biological measurements and integrate them to understand the underlying biological processes.</p>
+
+<p>I am interested in AI × Biology, particularly in developing frontier biological models that understand cellular states, cell–cell communication patterns, and tissue contexts or surrounding environments in order to predict disease outcomes and identify effective therapeutic strategies.</p>
+
         <h2 id="research-interests">Research Interests</h2>
         <ul>
           <li><strong>Computational Biology:</strong> single-cell genomics, toxicology, proteomics, systems immunology, TCR discovery, cell type discovery, epigenomics, transcriptomics</li>
           <li><strong>Machine Learning:</strong> deep learning, modality transformation, featurizaton, matrix factorization</li>
         </ul>
 
-        <h2 id="news">News</h2>
-        <ul>
+        <h2 id="news" class="news-heading" role="button" tabindex="0" aria-expanded="true" aria-controls="news-list">News <span class="chevron">&#9660;</span></h2>
+        <ul id="news-list">
 	  <li><strong>[Mar. 2026]</strong> Teaching assistant for <a href="https://aarmey.github.io/ml-for-bioe/"> BIOE 175/275</a> machine learning & data-driven modeling</li>
 	  <li><strong>[Mar. 2026]</strong> Advanced to PhD candidacy</li>
 	  <li><strong>[May  2025]</strong> Received an <a href="https://commencement.seas.ucla.edu/2025-awards/"> Engineering Achievement Award</a> for contributions to student welfare</li>
@@ -234,14 +421,33 @@
 	  <li><strong>[Oct. 2023]</strong> Appointed as a GSR at UCLA</li>
           <li><strong>[Sep. 2023]</strong> Started my MS in Bioengineering at UCLA</li>
           <li><strong>[Jul. 2023]</strong> Concluded my position as a Bioinformatics Specialist at LJI</li>
-	  <li><strong>[Jul. 2021]</strong> Accepted offer to work as a Bioinforamtics Specialist at LJI</li>
+		   <li><strong>[Jul. 2021]</strong> Accepted offer to work as a Bioinforamtics Specialist at LJI</li>
           <li><strong>[Mar. 2021]</strong> Graduated with a BS in Biology with Honors from UCR</li>
         </ul>
-	
-	<h2 id="publications" style="margin: 2px 0px -15px;">Past Work</h2>
+        <button type="button" id="news-toggle" aria-controls="news-list">Show more</button>
+
+	<h2 id="publications">Past Work</h2>
 	    <div class="publications">
 		    <ul class="bibliography" style="list-style-type: none; padding: 0;">
 			<li>
+			<div class="pub-row">
+			    <div class="image" style="float: left; margin-right: 10px;">
+				<img src="assets/images/parafrac2.png" alt="Publication Cover" style="width: 100px; height: auto;"/>
+			    </div>
+			    <div class="col-sm-9" style="position: relative; padding-right: 15px; padding-left: 20px;">
+				<div class="title">
+				    <a href="https://arxiv.org/pdf/2510.19294">
+					Integrative Analysis of Epigenetic, Transcriptomic, and Metabolomic Responses to Arsenic Exposure Using Coupled Matrix Factorization
+				    </a>
+				</div>
+				<div class="author"><strong>Sujit Silas Armstrong Suthahar</strong>, Patrick Allard</div>
+				<div class="links">
+				    <a href="https://arxiv.org/pdf/2510.19294" class="btn btn-sm z-depth-0" role="button" target="_blank">Paper</a>
+				</div>
+			    </div>
+			</div>
+		    </li>
+		    <li>
 			<div class="pub-row">
 			    <div class="image" style="float: left; margin-right: 10px;">
 				<img src="assets/images/olfr2.png" alt="Publication Cover" style="width: 100px; height: auto;"/>
@@ -333,18 +539,18 @@
 		    </li>
 		</ul>
 		
-		<div style="border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+		<div class="panel">
 		  <h2 id="interests" style="margin-top: 0;">Other Interests</h2>
-		
+
 		  <!-- Photography -->
 		  <div style="display: flex; align-items: center; margin-bottom: 15px;">
-		    <i class="fa-solid fa-camera" style="margin-right: 10px; color: #555;"></i>
+		    <i class="fa-solid fa-camera" style="margin-right: 10px;"></i>
 		    <div>
 		      <h3 style="margin: 0; font-weight: bold;">Photography</h3>
 		      <a href="https://www.instagram.com/sujitsilas_photography/"
 		         target="_blank"
 		         rel="noopener noreferrer"
-		         style="color: #008CBA; text-decoration: none;">
+		         class="accent-link">
 		        @sujitsilas_photography
 		      </a>
 		    </div>
@@ -352,7 +558,7 @@
 		
 		  <!-- Reading -->
 		  <div style="display: flex; align-items: center; margin-bottom: 15px;">
-		    <i class="fa-solid fa-book" style="margin-right: 10px; color: #555;"></i>
+		    <i class="fa-solid fa-book" style="margin-right: 10px;"></i>
 		    <div>
 		      <h3 style="margin: 0; font-weight: bold;">Reading</h3>
 		      <p style="margin: 0;">Outlive by Peter Attia, MD</p>
@@ -361,7 +567,7 @@
 		
 		  <!-- Listening -->
 		  <div style="display: flex; align-items: center; margin-bottom: 15px;">
-		    <i class="fa-solid fa-headphones" style="margin-right: 10px; color: #555;"></i>
+		    <i class="fa-solid fa-headphones" style="margin-right: 10px;"></i>
 		    <div>
 		      <h3 style="margin: 0; font-weight: bold;">Listening</h3>
 		      <p style="margin: 0;">All-In with Chamath, Jason, Sacks &amp; Friedberg</p>
@@ -370,35 +576,71 @@
 
 		  <!-- Performances -->
 		  <div style="display: flex; align-items: center; margin-bottom: 0;">
-		    <i class="fa-solid fa-microphone" style="margin-right: 10px; color: #555;"></i>
+		    <i class="fa-solid fa-microphone" style="margin-right: 10px;"></i>
 		    <div>
 		      <h3 style="margin: 0; font-weight: bold;">Performances</h3>
 		      <a href="https://youtube.com/playlist?list=PLXyCRw0HtgmpHorCdd0bPH6UexmXiiEO5&si=V2eRbuyhpMUQduHS"
 		         target="_blank"
 		         rel="noopener noreferrer"
-		         style="color: #008CBA; text-decoration: none;">
+		         class="accent-link">
 		        Bored? Check out my chorale performances on YouTube!
 		      </a>
 		    </div>
 		  </div>
 		</div>
-	      <div style="border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-	  <h2 id="consulting" style="margin-top: 0;">Consulting Services</h2>
-	  <p>
-	    I provide consulting services in AI and data platforms, regulatory and compliance engineering,
-		and government and enterprise programs. To learn more, click the button below, and feel free to reach out with any questions!
-	  </p>
-	  <a href="assets/consulting.pdf" target="_blank" style="text-decoration: none;">
-	    <button type="button" 
-		    style="background-color: #008CBA; color: #fff; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer;">
-	      Services
-		    </button>
-		  </a>
-		</div>
-		</ul>
-          </ol>
         </div>
       </section>
     </div>
+
+    <script>
+      (function () {
+        // ---- dark / light mode ----
+        var root = document.documentElement;
+        var toggle = document.getElementById('theme-toggle');
+        toggle.setAttribute('aria-checked', root.getAttribute('data-theme') === 'dark' ? 'true' : 'false');
+        toggle.addEventListener('click', function () {
+          var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          toggle.setAttribute('aria-checked', next === 'dark' ? 'true' : 'false');
+          try { localStorage.setItem('theme', next); } catch (e) {}
+        });
+
+        // ---- collapsible news ----
+        var heading = document.querySelector('.news-heading');
+        var list = document.getElementById('news-list');
+        var moreBtn = document.getElementById('news-toggle');
+        var items = Array.prototype.slice.call(list.getElementsByTagName('li'));
+        var LIMIT = 6;
+        var expanded = false;
+
+        function showItems(all) {
+          expanded = all;
+          items.forEach(function (li, i) {
+            li.classList.toggle('is-hidden', !all && i >= LIMIT);
+          });
+          moreBtn.textContent = all ? 'Show less' : 'Show more (' + (items.length - LIMIT) + ')';
+        }
+
+        if (items.length > LIMIT) {
+          showItems(false);
+          moreBtn.addEventListener('click', function () { showItems(!expanded); });
+        } else {
+          moreBtn.style.display = 'none';
+        }
+
+        // Clicking the "News" heading collapses or expands the whole section.
+        function toggleSection() {
+          var collapsed = heading.classList.toggle('is-collapsed');
+          list.style.display = collapsed ? 'none' : '';
+          moreBtn.style.display = (collapsed || items.length <= LIMIT) ? 'none' : '';
+          heading.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+        }
+
+        heading.addEventListener('click', toggleSection);
+        heading.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSection(); }
+        });
+      })();
+    </script>
   </body>
 </html>
